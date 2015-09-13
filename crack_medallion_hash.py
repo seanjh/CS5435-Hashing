@@ -26,11 +26,17 @@ def hash_medallion(medallion):
 
 def main():
   targets = frozenset(read_target_digests())
+  match_count = 0
   for line in medallions():
     digest = hash_medallion(line["License Number"])
     if digest in targets:
-      print('Matched `%s` to medallion `%s` owned by %s' % (
-        digest, line["License Number"], line["Name of Licensee"]
+      match_count += 1
+      print('%2d/%2d matched `%s` to medallion `%s` owned by %s' % (
+        match_count,
+        len(targets),
+        digest,
+        line["License Number"],
+        line["Name of Licensee"]
       ))
 
 if __name__ == '__main__':
